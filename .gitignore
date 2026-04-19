@@ -1,0 +1,62 @@
+# Node
+node_modules/
+
+# Next.js build output
+.next/
+out/
+.build/
+dist/
+
+# Production
+/build
+
+# Local env files
+.env.local
+.env.*.local
+.env
+!.env.example
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.vscode/
+.idea/
+.DS_Store
+
+# OS files
+Thumbs.db
+
+# Misc caches
+.cache/
+.next/cache/
+.pnp.cjs
+.pnp.loader.mjs
+
+# TypeScript
+*.tsbuildinfo
+
+# Testing
+coverage/
+
+# Vercel
+.vercel/
+
+# Turborepo
+.turbo/
+
+# Parcel, Expo, others
+.parcel-cache/
+.expo/
+.expo-shared/
+
+# Sensitive or local config
+.local
+
+# Optional: ignore lockfiles? usually keep them
+# package-lock.json
+# pnpm-lock.yaml
+# yarn.lock

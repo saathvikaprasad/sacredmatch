@@ -1,0 +1,33 @@
+{
+  "name": "candidate-directory",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build --webpack",
+    "start": "next start",
+    "lint": "next lint",
+    "supabase:verify": "node scripts/verify-supabase.mjs",
+    "supabase:seed-whitelist": "node scripts/seed-whitelist.mjs",
+    "supabase:bootstrap": "node scripts/bootstrap-supabase.mjs"
+  },
+  "dependencies": {
+    "@supabase/ssr": "latest",
+    "@supabase/supabase-js": "latest",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.38.0",
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "sonner": "^2.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.9.0"
+  }
+}

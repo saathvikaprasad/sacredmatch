@@ -1,0 +1,154 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply min-h-screen bg-sand text-ink antialiased;
+  background-image:
+    radial-gradient(
+      circle at top left,
+      rgba(216, 108, 91, 0.18),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at top right,
+      rgba(255, 221, 174, 0.4),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(91, 124, 101, 0.16),
+      transparent 28%
+    ),
+    linear-gradient(180deg, #fbf4e7 0%, #f5efe4 48%, #f6f1e8 100%);
+}
+
+a {
+  @apply transition;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family:
+    "Playfair Display", "Iowan Old Style", "Palatino Linotype", "Book Antiqua",
+    Georgia, serif;
+}
+
+::selection {
+  background: rgba(216, 108, 91, 0.22);
+}
+
+.mandala-grid {
+  background-image:
+    linear-gradient(rgba(16, 42, 67, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 42, 67, 0.04) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+.lotus-glow::before,
+.lotus-glow::after {
+  content: "";
+  position: absolute;
+  inset: auto;
+  border-radius: 9999px;
+  pointer-events: none;
+}
+
+.lotus-glow::before {
+  width: 9rem;
+  height: 9rem;
+  top: -2.5rem;
+  right: -1rem;
+  background: radial-gradient(
+    circle,
+    rgba(255, 214, 170, 0.5),
+    transparent 68%
+  );
+}
+
+.lotus-glow::after {
+  width: 10rem;
+  height: 10rem;
+  bottom: -3rem;
+  left: -2rem;
+  background: radial-gradient(
+    circle,
+    rgba(216, 108, 91, 0.16),
+    transparent 70%
+  );
+}
+
+.rangoli-ring {
+  position: relative;
+  background:
+    radial-gradient(
+      circle at center,
+      transparent 56%,
+      rgba(216, 108, 91, 0.08) 57%,
+      transparent 61%
+    ),
+    conic-gradient(
+      from 0deg,
+      rgba(216, 108, 91, 0.14),
+      rgba(255, 204, 153, 0.08),
+      rgba(91, 124, 101, 0.14),
+      rgba(216, 108, 91, 0.14)
+    );
+  mask: radial-gradient(circle at center, transparent 48%, black 49%);
+}
+
+.temple-arch {
+  border-top-left-radius: 9999px;
+  border-top-right-radius: 9999px;
+}
+
+@keyframes soft-float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes rotate-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse-gold {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.72;
+    transform: scale(1.04);
+  }
+}
+
+.animate-soft-float {
+  animation: soft-float 5s ease-in-out infinite;
+}
+
+.animate-rotate-slow {
+  animation: rotate-slow 24s linear infinite;
+}
+
+.animate-pulse-gold {
+  animation: pulse-gold 4.5s ease-in-out infinite;
+}
