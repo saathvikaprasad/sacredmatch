@@ -71,10 +71,21 @@ export default async function CandidateDetailPage({
           </div>
 
           <RevealOnScroll className="mt-10 grid gap-4 md:grid-cols-2">
-            <Field label="Age" value={String(candidate.age)} />
+            <Field
+              label="Age"
+              value={
+                candidate.age !== null && candidate.age !== undefined
+                  ? String(candidate.age)
+                  : "Not provided"
+              }
+            />
             <Field
               label="Date of Birth"
-              value={formatDate(candidate.date_of_birth)}
+              value={
+                candidate.date_of_birth
+                  ? formatDate(candidate.date_of_birth)
+                  : "Not provided"
+              }
             />
             <Field label="Star" value={candidate.star || "Not provided"} />
             <Field label="Father Name" value={candidate.father_name} />

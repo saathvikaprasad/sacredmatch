@@ -10,8 +10,8 @@ export type Candidate = {
   id: string;
   created_by: string;
   full_name: string;
-  age: number;
-  date_of_birth: string;
+  age: number | null;
+  date_of_birth: string | null;
   star: string | null;
   father_name: string;
   mother_name: string | null;
@@ -27,8 +27,8 @@ export type Candidate = {
 
 export type CandidatePayload = {
   full_name: string;
-  age: number;
-  date_of_birth: string;
+  age?: number | null;
+  date_of_birth?: string | null;
   star: string | null;
   father_name: string;
   mother_name?: string | null;

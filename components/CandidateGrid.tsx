@@ -18,7 +18,7 @@ export function CandidateGrid({ candidates }: CandidateGridProps) {
     gender: "",
     language: "",
     minAge: "",
-    maxAge: ""
+    maxAge: "",
   });
 
   const languages = useMemo(
@@ -27,10 +27,10 @@ export function CandidateGrid({ candidates }: CandidateGridProps) {
         new Set(
           candidates
             .map((candidate) => candidate.language?.trim())
-            .filter((language): language is string => Boolean(language))
-        )
+            .filter((language): language is string => Boolean(language)),
+        ),
       ).sort((left, right) => left.localeCompare(right)),
-    [candidates]
+    [candidates],
   );
 
   const filteredCandidates = useMemo(() => {
@@ -38,10 +38,22 @@ export function CandidateGrid({ candidates }: CandidateGridProps) {
       const matchesSearch = candidate.full_name
         .toLowerCase()
         .includes(filters.search.toLowerCase());
-      const matchesGender = filters.gender ? candidate.gender === filters.gender : true;
-      const matchesLanguage = filters.language ? candidate.language === filters.language : true;
-      const matchesMinAge = filters.minAge ? candidate.age >= Number(filters.minAge) : true;
-      const matchesMaxAge = filters.maxAge ? candidate.age <= Number(filters.maxAge) : true;
+      const matchesGender = filters.gender
+        ? candidate.gender === filters.gender
+        : true;
+      const matchesLanguage = filters.language
+        ? candidate.language === filters.language
+        : true;
+      const matchesMinAge = filters.minAge
+        ? candidate.age !== null && candidate.age !== undefined
+          ? candidate.age >= Number(filters.minAge)
+          : false
+        : true;
+      const matchesMaxAge = filters.maxAge
+        ? candidate.age !== null && candidate.age !== undefined
+          ? candidate.age <= Number(filters.maxAge)
+          : false
+        : true;
 
       return (
         matchesSearch &&

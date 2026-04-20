@@ -71,10 +71,27 @@ async function buildCandidatePayload(
       ? await uploadImage(image)
       : readString(formData, "existingImageUrl") || null;
 
+  const dob = readNullableString(formData, "date_of_birth");
+
+  function calculateAge(dobStr: string | null) {
+    if (!dobStr) return null;
+    const d = new Date(dobStr);
+    if (Number.isNaN(d.getTime())) return null;
+    const today = new Date();
+    let age = today.getFullYear() - d.getFullYear();
+    const m = today.getMonth() - d.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < d.getDate())) {
+      age -= 1;
+    }
+    return age > 0 ? age : null;
+  }
+
+  const ageCalculated = calculateAge(dob);
+
   return {
     full_name: readString(formData, "full_name"),
-    age: Number(readString(formData, "age")),
-    date_of_birth: readString(formData, "date_of_birth"),
+    age: ageCalculated,
+    date_of_birth: dob,
     star: readNullableString(formData, "star"),
     father_name: readString(formData, "father_name"),
     mother_name: readNullableString(formData, "mother_name"),
@@ -91,12 +108,7 @@ async function buildCandidatePayload(
 }
 
 function validateCandidatePayload(payload: CandidatePayload) {
-  if (
-    !payload.full_name ||
-    !payload.age ||
-    !payload.date_of_birth ||
-    !payload.father_name
-  ) {
+  if (!payload.full_name || !payload.father_name) {
     return "Please fill in all required fields.";
   }
 
@@ -110,7 +122,7 @@ export async function createCandidateAction(formData: FormData) {
   const errorMessage = validateCandidatePayload(payload);
 
   if (errorMessage) {
-    return { error: errorMessage };
+    throw new Error(errorMessage);
   }
 
   const { error } = await supabase.from("candidates").insert({
@@ -120,9 +132,9 @@ export async function createCandidateAction(formData: FormData) {
 
   if (error) {
     if (isMissingSchemaError(error)) {
-      return { error: getSetupGuidanceMessage() };
+      throw new Error(getSetupGuidanceMessage());
     }
-    return { error: error.message };
+    throw new Error(error.message);
   }
 
   revalidatePath("/dashboard");
@@ -137,11 +149,11 @@ export async function updateCandidateAction(formData: FormData) {
   const errorMessage = validateCandidatePayload(payload);
 
   if (!candidateId) {
-    return { error: "Candidate ID is missing." };
+    throw new Error("Candidate ID is missing.");
   }
 
   if (errorMessage) {
-    return { error: errorMessage };
+    throw new Error(errorMessage);
   }
 
   const { data: candidate, error: candidateError } = await supabase
@@ -152,13 +164,13 @@ export async function updateCandidateAction(formData: FormData) {
 
   if (candidateError) {
     if (isMissingSchemaError(candidateError)) {
-      return { error: getSetupGuidanceMessage() };
+      throw new Error(getSetupGuidanceMessage());
     }
-    return { error: candidateError.message };
+    throw new Error(candidateError.message);
   }
 
   if (!candidate || candidate.created_by !== user.email) {
-    return { error: "You can only edit candidates you created." };
+    throw new Error("You can only edit candidates you created.");
   }
 
   const { error } = await supabase
@@ -168,9 +180,9 @@ export async function updateCandidateAction(formData: FormData) {
 
   if (error) {
     if (isMissingSchemaError(error)) {
-      return { error: getSetupGuidanceMessage() };
+      throw new Error(getSetupGuidanceMessage());
     }
-    return { error: error.message };
+    throw new Error(error.message);
   }
 
   revalidatePath(`/candidate/${candidateId}`);

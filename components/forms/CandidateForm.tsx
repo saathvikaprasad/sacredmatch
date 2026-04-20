@@ -23,9 +23,15 @@ export function CandidateForm({ action, candidate, mode }: CandidateFormProps) {
       : [{ key: "", value: "" }],
   );
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    console.log("Form submitted", { mode, candidateId: candidate?.id });
+    // Let the form submission proceed normally
+  };
+
   return (
     <form
       action={action}
+      onSubmit={handleSubmit}
       className="space-y-6 rounded-[2rem] border border-black/5 bg-white p-6 shadow-soft"
     >
       {candidate ? (
@@ -55,21 +61,10 @@ export function CandidateForm({ action, candidate, mode }: CandidateFormProps) {
           />
         </label>
         <label className="space-y-2 text-sm text-slate">
-          <span>Age *</span>
-          <input
-            type="number"
-            name="age"
-            required
-            defaultValue={candidate?.age ?? ""}
-            className="w-full rounded-2xl border border-black/10 px-4 py-3 text-ink outline-none transition focus:border-coral"
-          />
-        </label>
-        <label className="space-y-2 text-sm text-slate">
-          <span>Date of Birth *</span>
+          <span>Date of Birth</span>
           <input
             type="date"
             name="date_of_birth"
-            required
             defaultValue={candidate?.date_of_birth ?? ""}
             className="w-full rounded-2xl border border-black/10 px-4 py-3 text-ink outline-none transition focus:border-coral"
           />
@@ -145,7 +140,7 @@ export function CandidateForm({ action, candidate, mode }: CandidateFormProps) {
           </select>
         </label>
         <label className="space-y-2 text-sm text-slate">
-          <span>Language</span>
+          <span>Mother Tongue</span>
           <input
             name="language"
             defaultValue={candidate?.language ?? ""}
