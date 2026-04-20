@@ -76,7 +76,7 @@ export default async function CandidateDetailPage({
               label="Date of Birth"
               value={formatDate(candidate.date_of_birth)}
             />
-            <Field label="Star" value={candidate.star} />
+            <Field label="Star" value={candidate.star || "Not provided"} />
             <Field label="Father Name" value={candidate.father_name} />
             <Field
               label="Mother Name"

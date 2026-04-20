@@ -37,7 +37,7 @@ export default async function DashboardPage() {
                   <p className="text-sm text-slate">
                     Signed in as{" "}
                     <span className="font-semibold text-ink">
-                      saathvika.nt@gmail.com
+                      {user?.email}
                     </span>
                   </p>
 

@@ -12,7 +12,7 @@ export type Candidate = {
   full_name: string;
   age: number;
   date_of_birth: string;
-  star: string;
+  star: string | null;
   father_name: string;
   mother_name: string | null;
   email: string | null;
@@ -29,7 +29,7 @@ export type CandidatePayload = {
   full_name: string;
   age: number;
   date_of_birth: string;
-  star: string;
+  star: string | null;
   father_name: string;
   mother_name?: string | null;
   email?: string | null;
