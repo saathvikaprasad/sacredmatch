@@ -19,14 +19,18 @@ create table if not exists public.candidates (
   full_name text not null,
   age integer check (age > 0),
   date_of_birth date,
+  time_of_birth time,
   star text,
+  place_of_birth text,
+  gothra text,
+  nationality_preference text,
+  language_preference text[],
   father_name text not null,
   mother_name text,
   email text,
   mobile_country_code text,
   mobile_number text,
   gender text check (gender in ('male', 'female')),
-  language text,
   additional_fields jsonb not null default '{}'::jsonb,
   image_url text,
   created_at timestamptz not null default timezone('utc', now())
@@ -35,6 +39,11 @@ create table if not exists public.candidates (
 alter table public.candidates add column if not exists email text;
 alter table public.candidates add column if not exists mobile_country_code text;
 alter table public.candidates add column if not exists mobile_number text;
+alter table public.candidates add column if not exists place_of_birth text;
+alter table public.candidates add column if not exists gothra text;
+alter table public.candidates add column if not exists nationality_preference text;
+alter table public.candidates add column if not exists language_preference text[];
+alter table public.candidates add column if not exists time_of_birth time;
 
 create or replace function public.current_user_email()
 returns text

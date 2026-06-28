@@ -20,6 +20,34 @@ export default async function DashboardPage() {
   return (
     <SacredBackdrop>
       <main className="mx-auto max-w-7xl px-6 py-10">
+        <FadeIn y={22}>
+          <section className="mb-8 rounded-[2rem] border border-white/50 bg-white/75 p-6 shadow-soft backdrop-blur-sm md:p-8">
+            <p className="text-sm uppercase tracking-[0.28em] text-coral">
+              Purpose
+            </p>
+            <p className="mt-4 max-w-5xl text-base leading-8 text-slate">
+              This directory has been created to serve the Krishna Katha Desh
+              (KKD) devotee community by providing a platform for devotee
+              families to know one another and explore suitable matrimonial
+              alliances in a respectful and organized manner.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link
+                href="/purpose"
+                className="rounded-full bg-[linear-gradient(135deg,#d86c5b,#b55345)] px-5 py-3 text-sm font-semibold text-white shadow-[0_12px_24px_rgba(216,108,91,0.22)]"
+              >
+                View purpose
+              </Link>
+              <Link
+                href="/rules"
+                className="rounded-full border border-ink/15 bg-white/85 px-5 py-3 text-sm font-semibold text-ink transition hover:border-coral hover:text-coral"
+              >
+                View Rules & Guidelines
+              </Link>
+            </div>
+          </section>
+        </FadeIn>
+
         <FadeIn y={26}>
           <HaloPanel className="lotus-glow temple-arch rounded-[2.8rem] px-8 pb-8 pt-14 md:px-10">
             <div className="animate-pulse-gold absolute inset-x-0 top-0 h-20 bg-[radial-gradient(circle_at_top,rgba(255,218,174,0.5),transparent_72%)]" />

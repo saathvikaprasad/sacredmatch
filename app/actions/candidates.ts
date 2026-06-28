@@ -24,6 +24,15 @@ function readNullableString(formData: FormData, key: string) {
   return value || null;
 }
 
+function readStringArray(formData: FormData, key: string) {
+  const values = formData
+    .getAll(key)
+    .map((value) => String(value).trim())
+    .filter(Boolean);
+
+  return values.length > 0 ? values : null;
+}
+
 function parseAdditionalFields(raw: string) {
   if (!raw) {
     return {};
@@ -92,14 +101,21 @@ async function buildCandidatePayload(
     full_name: readString(formData, "full_name"),
     age: ageCalculated,
     date_of_birth: dob,
+    time_of_birth: readNullableString(formData, "time_of_birth"),
     star: readNullableString(formData, "star"),
+    place_of_birth: readNullableString(formData, "place_of_birth"),
+    gothra: readNullableString(formData, "gothra"),
+    nationality_preference: readNullableString(
+      formData,
+      "nationality_preference",
+    ),
+    language_preference: readStringArray(formData, "language_preference"),
     father_name: readString(formData, "father_name"),
     mother_name: readNullableString(formData, "mother_name"),
     email: readNullableString(formData, "email"),
     mobile_country_code: readNullableString(formData, "mobile_country_code"),
     mobile_number: readNullableString(formData, "mobile_number"),
     gender: readNullableString(formData, "gender"),
-    language: readNullableString(formData, "language"),
     additional_fields: parseAdditionalFields(
       readString(formData, "additional_fields"),
     ),

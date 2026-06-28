@@ -16,22 +16,9 @@ export function CandidateGrid({ candidates }: CandidateGridProps) {
   const [filters, setFilters] = useState({
     search: "",
     gender: "",
-    language: "",
     minAge: "",
     maxAge: "",
   });
-
-  const languages = useMemo(
-    () =>
-      Array.from(
-        new Set(
-          candidates
-            .map((candidate) => candidate.language?.trim())
-            .filter((language): language is string => Boolean(language)),
-        ),
-      ).sort((left, right) => left.localeCompare(right)),
-    [candidates],
-  );
 
   const filteredCandidates = useMemo(() => {
     return candidates.filter((candidate) => {
@@ -40,9 +27,6 @@ export function CandidateGrid({ candidates }: CandidateGridProps) {
         .includes(filters.search.toLowerCase());
       const matchesGender = filters.gender
         ? candidate.gender === filters.gender
-        : true;
-      const matchesLanguage = filters.language
-        ? candidate.language === filters.language
         : true;
       const matchesMinAge = filters.minAge
         ? candidate.age !== null && candidate.age !== undefined
@@ -58,7 +42,6 @@ export function CandidateGrid({ candidates }: CandidateGridProps) {
       return (
         matchesSearch &&
         matchesGender &&
-        matchesLanguage &&
         matchesMinAge &&
         matchesMaxAge
       );
@@ -67,7 +50,7 @@ export function CandidateGrid({ candidates }: CandidateGridProps) {
 
   return (
     <div className="space-y-6">
-      <Filters languages={languages} onChange={setFilters} />
+      <Filters onChange={setFilters} />
 
       {filteredCandidates.length === 0 ? (
         <FadeIn>

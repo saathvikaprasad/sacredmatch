@@ -34,8 +34,7 @@ export function CandidateCard({ candidate }: CandidateCardProps) {
               {candidate.full_name}
             </p>
             <p className="mt-1 text-sm text-slate">
-              {candidate.gender ? `${candidate.gender} · ` : ""}
-              {candidate.language || "Language not specified"}
+              {candidate.gender || "Gender not specified"}
             </p>
           </div>
         </div>

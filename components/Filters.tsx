@@ -7,20 +7,17 @@ import { FadeIn } from "@/components/motion/FadeIn";
 type FilterState = {
   search: string;
   gender: string;
-  language: string;
   minAge: string;
   maxAge: string;
 };
 
 type FiltersProps = {
-  languages: string[];
   onChange: (filters: FilterState) => void;
 };
 
-export function Filters({ languages, onChange }: FiltersProps) {
+export function Filters({ onChange }: FiltersProps) {
   const [search, setSearch] = useState("");
   const [gender, setGender] = useState("");
-  const [language, setLanguage] = useState("");
   const [minAge, setMinAge] = useState("");
   const [maxAge, setMaxAge] = useState("");
   const deferredSearch = useDeferredValue(search);
@@ -30,11 +27,10 @@ export function Filters({ languages, onChange }: FiltersProps) {
     () => ({
       search: deferredSearch,
       gender,
-      language,
       minAge,
       maxAge,
     }),
-    [deferredSearch, gender, language, maxAge, minAge],
+    [deferredSearch, gender, maxAge, minAge],
   );
 
   useEffect(() => {
@@ -70,7 +66,7 @@ export function Filters({ languages, onChange }: FiltersProps) {
           </p>
           <div className="flex items-center gap-3">
             <div className="hidden rounded-full border border-coral/15 bg-coral/10 px-3 py-1 text-xs font-semibold text-coral md:block">
-              Search by name, age, language, and gender
+              Search by name, age, and gender
             </div>
             <div className="md:hidden inline-flex items-center justify-center rounded-md bg-coral/10 p-1 text-coral">
               <svg
@@ -90,7 +86,7 @@ export function Filters({ languages, onChange }: FiltersProps) {
         </div>
 
         <div className={`${open ? "block" : "hidden"} md:block`}>
-          <div className="grid gap-4 md:grid-cols-5">
+          <div className="grid gap-4 md:grid-cols-4">
             <input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
@@ -105,18 +101,6 @@ export function Filters({ languages, onChange }: FiltersProps) {
               <option value="">All genders</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
-            </select>
-            <select
-              value={language}
-              onChange={(event) => setLanguage(event.target.value)}
-              className="rounded-2xl border border-amber-100 bg-white/90 px-4 py-3 text-sm outline-none transition focus:border-coral"
-            >
-              <option value="">All languages</option>
-              {languages.map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
             </select>
             <input
               type="number"

@@ -87,7 +87,29 @@ export default async function CandidateDetailPage({
                   : "Not provided"
               }
             />
+            <Field
+              label="Time of Birth"
+              value={candidate.time_of_birth || "Not provided"}
+            />
             <Field label="Star" value={candidate.star || "Not provided"} />
+            <Field
+              label="Place of Birth"
+              value={candidate.place_of_birth || "Not provided"}
+            />
+            <Field label="Gothra" value={candidate.gothra || "Not provided"} />
+            <Field
+              label="Nationality Preference"
+              value={candidate.nationality_preference || "Not provided"}
+            />
+            <Field
+              label="Language Preference"
+              value={
+                candidate.language_preference &&
+                candidate.language_preference.length > 0
+                  ? candidate.language_preference.join(", ")
+                  : "Not provided"
+              }
+            />
             <Field label="Father Name" value={candidate.father_name} />
             <Field
               label="Mother Name"
@@ -103,10 +125,6 @@ export default async function CandidateDetailPage({
               }
             />
             <Field label="Gender" value={candidate.gender || "Not provided"} />
-            <Field
-              label="Language"
-              value={candidate.language || "Not provided"}
-            />
             <Field
               label="Created At"
               value={formatDate(candidate.created_at)}

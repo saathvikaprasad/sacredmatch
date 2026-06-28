@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { SubmitButton } from "@/components/ui/SubmitButton";
 import { COUNTRY_CODES } from "@/lib/country-codes";
+import { LANGUAGE_PREFERENCES, NATIONALITY_PREFERENCES } from "@/lib/preferences";
 import type { Candidate } from "@/lib/types";
 import { buildAdditionalFields } from "@/lib/utils";
 
@@ -12,6 +13,22 @@ type CandidateFormProps = {
   candidate?: Candidate;
   mode: "create" | "edit";
 };
+
+function requiredField(message: string, typeMessage?: string) {
+  return {
+    required: true,
+    onInvalid: (event: React.InvalidEvent<HTMLInputElement>) => {
+      event.currentTarget.setCustomValidity(
+        event.currentTarget.validity.valueMissing
+          ? message
+          : typeMessage || message,
+      );
+    },
+    onInput: (event: React.FormEvent<HTMLInputElement>) => {
+      event.currentTarget.setCustomValidity("");
+    },
+  };
+}
 
 export function CandidateForm({ action, candidate, mode }: CandidateFormProps) {
   const [fields, setFields] = useState(
@@ -55,17 +72,28 @@ export function CandidateForm({ action, candidate, mode }: CandidateFormProps) {
           <span>Full Name *</span>
           <input
             name="full_name"
-            required
             defaultValue={candidate?.full_name ?? ""}
+            {...requiredField("Please enter the candidate's name.")}
             className="w-full rounded-2xl border border-black/10 px-4 py-3 text-ink outline-none transition focus:border-coral"
           />
         </label>
         <label className="space-y-2 text-sm text-slate">
-          <span>Date of Birth</span>
+          <span>Date of Birth *</span>
           <input
             type="date"
             name="date_of_birth"
             defaultValue={candidate?.date_of_birth ?? ""}
+            {...requiredField("Please select the date of birth.")}
+            className="w-full rounded-2xl border border-black/10 px-4 py-3 text-ink outline-none transition focus:border-coral"
+          />
+        </label>
+        <label className="space-y-2 text-sm text-slate">
+          <span>Time of Birth *</span>
+          <input
+            type="time"
+            name="time_of_birth"
+            defaultValue={candidate?.time_of_birth ?? ""}
+            {...requiredField("Please select the time of birth.")}
             className="w-full rounded-2xl border border-black/10 px-4 py-3 text-ink outline-none transition focus:border-coral"
           />
         </label>
@@ -76,6 +104,57 @@ export function CandidateForm({ action, candidate, mode }: CandidateFormProps) {
             defaultValue={candidate?.star ?? ""}
             className="w-full rounded-2xl border border-black/10 px-4 py-3 text-ink outline-none transition focus:border-coral"
           />
+        </label>
+        <label className="space-y-2 text-sm text-slate">
+          <span>Place of Birth *</span>
+          <input
+            name="place_of_birth"
+            defaultValue={candidate?.place_of_birth ?? ""}
+            {...requiredField("Please enter the place of birth.")}
+            className="w-full rounded-2xl border border-black/10 px-4 py-3 text-ink outline-none transition focus:border-coral"
+          />
+        </label>
+        <label className="space-y-2 text-sm text-slate">
+          <span>Gothra *</span>
+          <input
+            name="gothra"
+            defaultValue={candidate?.gothra ?? ""}
+            {...requiredField("Please enter the gothra.")}
+            className="w-full rounded-2xl border border-black/10 px-4 py-3 text-ink outline-none transition focus:border-coral"
+          />
+        </label>
+        <label className="space-y-2 text-sm text-slate">
+          <span>Nationality Preference</span>
+          <select
+            name="nationality_preference"
+            defaultValue={candidate?.nationality_preference ?? ""}
+            className="w-full rounded-2xl border border-black/10 px-4 py-3 text-ink outline-none transition focus:border-coral"
+          >
+            <option value="">Select preference</option>
+            {NATIONALITY_PREFERENCES.map((preference) => (
+              <option key={preference} value={preference}>
+                {preference}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="space-y-2 text-sm text-slate">
+          <span>Language Preference</span>
+          <select
+            name="language_preference"
+            multiple
+            defaultValue={candidate?.language_preference ?? []}
+            className="min-h-40 w-full rounded-2xl border border-black/10 px-4 py-3 text-ink outline-none transition focus:border-coral"
+          >
+            {LANGUAGE_PREFERENCES.map((language) => (
+              <option key={language} value={language}>
+                {language}
+              </option>
+            ))}
+          </select>
+          <span className="block text-xs text-slate">
+            Hold Command on Mac or Ctrl on Windows to select multiple languages.
+          </span>
         </label>
         <label className="space-y-2 text-sm text-slate">
           <span>Father Name *</span>
@@ -95,11 +174,15 @@ export function CandidateForm({ action, candidate, mode }: CandidateFormProps) {
           />
         </label>
         <label className="space-y-2 text-sm text-slate">
-          <span>Email</span>
+          <span>Email *</span>
           <input
             type="email"
             name="email"
             defaultValue={candidate?.email ?? ""}
+            {...requiredField(
+              "Please enter the email address.",
+              "Please enter a valid email address.",
+            )}
             className="w-full rounded-2xl border border-black/10 px-4 py-3 text-ink outline-none transition focus:border-coral"
           />
         </label>
@@ -138,14 +221,6 @@ export function CandidateForm({ action, candidate, mode }: CandidateFormProps) {
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
-        </label>
-        <label className="space-y-2 text-sm text-slate">
-          <span>Mother Tongue</span>
-          <input
-            name="language"
-            defaultValue={candidate?.language ?? ""}
-            className="w-full rounded-2xl border border-black/10 px-4 py-3 text-ink outline-none transition focus:border-coral"
-          />
         </label>
       </div>
 
